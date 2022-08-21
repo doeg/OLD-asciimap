@@ -1,0 +1,8 @@
+.container {
+  border: solid 1px #ccc;
+  display: grid;
+  font-family: monospace;
+  grid-auto-flow: column;
+  margin: 0 auto;
+  width: 32rem;
+}

@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { MapCanvas } from "../components/MapCanvas";
+import { Workspace } from "../components/Workspace";
 import { MapsContextProvider } from "../contexts/maps-context";
 
 const Home: NextPage = () => {
@@ -15,7 +16,7 @@ const Home: NextPage = () => {
 
         <main className="text-center">
           <h1>ASCII Mapper</h1>
-          <MapCanvas />
+          <Workspace />
         </main>
       </div>
     </MapsContextProvider>

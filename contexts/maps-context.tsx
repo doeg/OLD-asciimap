@@ -92,17 +92,27 @@ export const useMapsContext = (): UseMapsContext => {
 
   const createMap = useCallback(() => {
     const createdAt = Date.now();
+    const size = 32;
+
+    const initialLayer = new Array(size);
+    for (let i = 0; i < size; i++) {
+      initialLayer[i] = new Array(size);
+      for (let j = 0; j < size; j++) {
+        initialLayer[i][j] = null;
+      }
+    }
+
     context.dispatch({
       type: "MAPS_CREATE",
       data: {
         createdAt,
-        height: 32,
+        height: size,
         id: `${createdAt}`,
         legend: {},
-        layers: [],
+        layers: [initialLayer],
         title: "Untitled Map",
         updatedAt: Date.now(),
-        width: 32,
+        width: size,
       },
     });
   }, [mapCount]);
