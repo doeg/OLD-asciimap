@@ -47,11 +47,12 @@ type MapsContextType = { state: MapsState; dispatch: Dispatch };
 
 const MapsContext = createContext<MapsContextType | undefined>(undefined);
 
-const mapsReducer = (state: MapsState, action: Action) => {
+const mapsReducer = (state: MapsState, action: Action): MapsState => {
   switch (action.type) {
     case "MAPS_CREATE":
       return {
         ...state,
+        currentMapID: action.data.id,
         maps: {
           ...state.maps,
           [action.data.id]: action.data,
