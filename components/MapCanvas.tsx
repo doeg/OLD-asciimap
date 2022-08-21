@@ -18,18 +18,15 @@ export const MapCanvas = () => {
   }, [canvasRef.current]);
 
   const onMouseDown = () => {
-    console.log("mousedown");
     setIsDragging(true);
   };
 
   const onMouseUp = () => {
-    console.log("mouseup");
     setIsDragging(false);
   };
 
   const onMouseOver = (e: any, cell: any, row: number, col: number) => {
     if (isDragging) {
-      console.log("mouseover", cell, row, col, e);
       setSelectedCoords({
         ...selectedCoords,
         [row]: {
@@ -51,8 +48,6 @@ export const MapCanvas = () => {
   const layer = currentMap?.layers.length ? currentMap.layers[0] : null;
 
   if (!layer) return null;
-
-  console.log(selectedCoords);
 
   return (
     <div

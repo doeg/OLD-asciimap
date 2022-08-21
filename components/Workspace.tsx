@@ -1,15 +1,17 @@
+import { useEffect } from "react";
 import { useMapsContext } from "../contexts/maps-context";
 import { MapCanvas } from "./MapCanvas";
 
 export const Workspace = () => {
   const { createMap, currentMap, state } = useMapsContext();
 
+  useEffect(() => {
+    createMap();
+  }, []);
+
   return (
     <div>
-      <button onClick={createMap}>New map</button>
       <MapCanvas />
-      <hr />
-      <pre>{JSON.stringify(state.maps, null, 2)}</pre>
     </div>
   );
 };
