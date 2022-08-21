@@ -6,3 +6,8 @@
   margin: 0 auto;
   width: 32rem;
 }
+
+.cell:hover {
+  background: #333;
+  color: lime;
+}
