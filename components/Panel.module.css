@@ -1,0 +1,9 @@
+.panel {
+  border: solid 1px var(--border);
+  padding: 4px;
+
+  /* TODO: adjust positioning */
+  position: absolute;
+  top: 48px;
+  left: 48px;
+}

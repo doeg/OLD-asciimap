@@ -1,5 +1,6 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { NextPage } from "next";
+import Head from "next/head";
+import { Workspace } from "../components/Workspace";
 
 const Home: NextPage = () => {
   return (
@@ -10,11 +11,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="text-center">
-        <h1>ASCII Mapper</h1>
-      </main>
+      <Workspace />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

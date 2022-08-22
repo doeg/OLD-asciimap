@@ -1,8 +1,9 @@
 :root {
   --background: #222;
-  --color: #BBB;
+  --backgroundHover: #333;
+  --color: #bbb;
+  --border: #333;
 }
-
 
 html,
 body {

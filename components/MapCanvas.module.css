@@ -1,0 +1,22 @@
+.grid {
+  font-family: monospace;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  cursor: pointer;
+  display: inline-block;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+  width: 18px;
+}
+
+.cell:hover {
+  background: var(--backgroundHover);
+  user-select: none;
+}
