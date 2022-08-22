@@ -14,8 +14,6 @@ export const Workspace = () => {
     const layer = map.layers[0];
 
     const nextTiles = updateTile(layer.tiles, rdx, cdx, activeSymbolID);
-    console.log(nextTiles);
-
     const nextLayer = { ...layer, tiles: nextTiles };
     const nextMap = {
       ...map,
