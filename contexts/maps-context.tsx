@@ -19,7 +19,9 @@ const EMPTY_STATE: MapsState = {
   maps: {},
 };
 
-type Action = { type: "MAPS_CREATE"; data: ASCIIMap };
+type Action =
+  | { type: "MAPS_CREATE"; data: ASCIIMap }
+  | { type: "SET_STATE"; data: MapsState };
 
 type Dispatch = (action: Action) => void;
 
@@ -38,8 +40,10 @@ const mapsReducer = (state: MapsState, action: Action): MapsState => {
           [action.data.id]: action.data,
         },
       };
+    case "SET_STATE":
+      return action.data;
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${(action as any).type}`);
   }
 };
 
@@ -54,6 +58,7 @@ export const MapsContextProvider: FunctionComponent<PropsWithChildren> = ({
 interface UseMapsContext extends MapsContextType {
   createMap: () => void;
   currentMap: ASCIIMap | null;
+  setState: (state: MapsState) => void;
 }
 
 export const useMapsContext = (): UseMapsContext => {
@@ -74,9 +79,14 @@ export const useMapsContext = (): UseMapsContext => {
     });
   }, []);
 
+  const setState = useCallback((state: MapsState) => {
+    context.dispatch({ type: "SET_STATE", data: state });
+  }, []);
+
   return {
     ...context,
     createMap,
     currentMap,
+    setState,
   };
 };
