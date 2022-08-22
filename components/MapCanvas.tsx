@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMapsContext } from "../contexts/maps-context";
+import { updateCell } from "../utils/asciiMap";
 import style from "./MapCanvas.module.css";
 
 type SelectedCoords = { [row: number]: { [col: number]: boolean } };
@@ -7,7 +8,7 @@ type SelectedCoords = { [row: number]: { [col: number]: boolean } };
 export const MapCanvas = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const { currentMap } = useMapsContext();
+  const { currentMap, updateMap } = useMapsContext();
   const [isDragging, setIsDragging] = useState(false);
   const [selectedCoords, setSelectedCoords] = useState<SelectedCoords>([]);
 
@@ -26,14 +27,12 @@ export const MapCanvas = () => {
   };
 
   const onMouseOver = (e: any, cell: any, row: number, col: number) => {
+    if (!currentMap) return;
+
     if (isDragging) {
-      setSelectedCoords({
-        ...selectedCoords,
-        [row]: {
-          ...selectedCoords[row],
-          [col]: true,
-        },
-      });
+      const symbolID = Object.keys(currentMap.legend || {})[0] as string;
+      const nextMap = updateCell(currentMap, row, col, symbolID);
+      updateMap(nextMap);
     }
   };
 
@@ -58,18 +57,22 @@ export const MapCanvas = () => {
     >
       {layer.map((row, rdx) => (
         <div className={style.row} key={`row${rdx}`}>
-          {row.map((cell, cdx) => (
-            <div
-              className={style.cell}
-              data-col={cdx}
-              data-row={rdx}
-              key={`row-${rdx}_col-${cdx}`}
-              onClick={(e) => onClickCell(e, cell, rdx, cdx)}
-              onMouseOver={(e) => onMouseOver(e, cell, rdx, cdx)}
-            >
-              {selectedCoords[rdx] && selectedCoords[rdx][cdx] ? "#" : "."}
-            </div>
-          ))}
+          {row.map((_, cdx) => {
+            const cell = layer[rdx][cdx];
+            console.log(cell);
+            return (
+              <div
+                className={style.cell}
+                data-col={cdx}
+                data-row={rdx}
+                key={`row-${rdx}_col-${cdx}`}
+                onClick={(e) => onClickCell(e, cell, rdx, cdx)}
+                onMouseOver={(e) => onMouseOver(e, cell, rdx, cdx)}
+              >
+                {selectedCoords[rdx] && selectedCoords[rdx][cdx] ? "#" : "."}
+              </div>
+            );
+          })}
         </div>
       ))}
     </div>

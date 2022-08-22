@@ -59,6 +59,7 @@ interface UseMapsContext extends MapsContextType {
   createMap: () => void;
   currentMap: ASCIIMap | null;
   setState: (state: MapsState) => void;
+  updateMap: (nextMap: ASCIIMap) => void;
 }
 
 export const useMapsContext = (): UseMapsContext => {
@@ -83,10 +84,24 @@ export const useMapsContext = (): UseMapsContext => {
     context.dispatch({ type: "SET_STATE", data: state });
   }, []);
 
+  const updateMap = (nextMap: ASCIIMap) => {
+    if (!currentMapID) return;
+
+    console.log(nextMap);
+    context.dispatch({
+      type: "SET_STATE",
+      data: {
+        ...context.state,
+        [currentMapID]: nextMap,
+      },
+    });
+  };
+
   return {
     ...context,
     createMap,
     currentMap,
     setState,
+    updateMap,
   };
 };

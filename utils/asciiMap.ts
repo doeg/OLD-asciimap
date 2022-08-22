@@ -2,9 +2,10 @@ export type MapLayer = (string | null)[][];
 
 export type MapLegend = {
   [id: string]: {
-    background: string;
-    color: string;
-    label: string;
+    background?: string;
+    color?: string;
+    id: string;
+    label?: string;
     symbol: string;
   };
 };
@@ -38,10 +39,38 @@ export const createMap = (opts: CreateMapOpts = {}): ASCIIMap => {
     createdAt,
     height: size,
     id: `${createdAt}`,
-    legend: {},
+    legend: {
+      "#": {
+        id: "#",
+        symbol: "#",
+      },
+    },
     layers: [initialLayer],
     title: "Untitled Map",
     updatedAt: Date.now(),
     width: size,
+  };
+};
+
+export const updateCell = (
+  map: ASCIIMap,
+  row: number,
+  col: number,
+  symbolID: string
+): ASCIIMap => {
+  if (!map.layers) return map;
+
+  const layer = map.layers[0];
+  const nextLayer = {
+    ...layer,
+    [row]: {
+      ...layer[row],
+      [col]: symbolID,
+    },
+  };
+
+  return {
+    ...map,
+    layers: [nextLayer],
   };
 };
