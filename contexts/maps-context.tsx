@@ -6,28 +6,8 @@ import {
   useContext,
   useReducer,
 } from "react";
-
-type MapLayer = (string | null)[][];
-
-type MapLegend = {
-  [id: string]: {
-    background: string;
-    color: string;
-    label: string;
-    symbol: string;
-  };
-};
-
-interface ASCIIMap {
-  createdAt: number;
-  height: number;
-  id: string;
-  legend: MapLegend;
-  layers: MapLayer[];
-  title: string;
-  updatedAt: number;
-  width: number;
-}
+import { ASCIIMap } from "../utils/asciiMap";
+import * as utils from "../utils/asciiMap";
 
 interface MapsState {
   currentMapID: string | null;
@@ -68,7 +48,6 @@ export const MapsContextProvider: FunctionComponent<PropsWithChildren> = ({
 }) => {
   const [state, dispatch] = useReducer(mapsReducer, EMPTY_STATE);
   const value: MapsContextType = { state, dispatch };
-
   return <MapsContext.Provider value={value}>{children}</MapsContext.Provider>;
 };
 
@@ -88,34 +67,12 @@ export const useMapsContext = (): UseMapsContext => {
   const currentMap =
     currentMapID && currentMapID in maps ? maps[currentMapID] : null;
 
-  const mapCount = Object.keys(maps).length;
-
   const createMap = useCallback(() => {
-    const createdAt = Date.now();
-    const size = 32;
-
-    const initialLayer = new Array(size);
-    for (let i = 0; i < size; i++) {
-      initialLayer[i] = new Array(size);
-      for (let j = 0; j < size; j++) {
-        initialLayer[i][j] = null;
-      }
-    }
-
     context.dispatch({
       type: "MAPS_CREATE",
-      data: {
-        createdAt,
-        height: size,
-        id: `${createdAt}`,
-        legend: {},
-        layers: [initialLayer],
-        title: "Untitled Map",
-        updatedAt: Date.now(),
-        width: size,
-      },
+      data: utils.createMap(),
     });
-  }, [mapCount]);
+  }, []);
 
   return {
     ...context,
