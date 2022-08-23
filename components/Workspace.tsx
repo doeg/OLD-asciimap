@@ -1,12 +1,17 @@
 import { useState } from "react";
 
 import { createMap, Map, updateTile } from "../utils/map";
+import { FilePanel } from "./FilePanel";
 import { MapCanvas } from "./MapCanvas";
 import { SymbolsPanel } from "./SymbolsPanel";
 import style from "./Workspace.module.css";
 
 export const Workspace = () => {
   const [map, setMap] = useState<Map>(createMap());
+
+  const onClear = () => {
+    setMap(createMap());
+  };
 
   const onClickCell = (rdx: number, cdx: number) => {
     // FIXME hardcoded hacks
@@ -24,7 +29,10 @@ export const Workspace = () => {
 
   return (
     <div className={style.container}>
-      <SymbolsPanel map={map} />
+      <div className={style.sidebar}>
+        <FilePanel onClear={onClear} />
+        <SymbolsPanel map={map} />
+      </div>
       <MapCanvas map={map} onClickCell={onClickCell} />
     </div>
   );

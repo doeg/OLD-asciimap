@@ -1,9 +1,11 @@
 .panel {
   border: solid 1px var(--border);
-  padding: 4px;
+  margin: 8px;
+  padding: 8px;
+}
 
-  /* TODO: adjust positioning */
-  position: absolute;
-  top: 48px;
-  left: 48px;
+.title {
+  font-family: monospace;
+  font-size: 18px;
+  margin: 0 0 8px 0;
 }

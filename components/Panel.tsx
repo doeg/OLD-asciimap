@@ -10,7 +10,7 @@ interface Props {
 export const Panel: FunctionComponent<Props> = ({ children, title }) => {
   return (
     <div className={style.panel}>
-      <div>{title}</div>
+      <div className={style.title}>{title}</div>
       {children}
     </div>
   );
