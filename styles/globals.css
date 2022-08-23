@@ -27,3 +27,12 @@ a {
 .text-center {
   text-align: center;
 }
+
+.vstack {
+  display: flex;
+  flex-direction: column;
+}
+
+.mb-1 {
+  margin-bottom: 4px;
+}
